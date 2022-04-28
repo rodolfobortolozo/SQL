@@ -2,7 +2,7 @@ create or replace function DistanciaLatLng(Latitude1 number, Longitude1 number,
                                            Latitude2 number, Longitude2 number)
 return number is 
 /*
-       Funcao para Calcular as distancias entre as latitudes e longitudes
+       Function to Calculate Distance km KM with latitudes and longitudes.
        Rodolfo Bortolozo
 */
    
