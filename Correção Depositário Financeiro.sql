@@ -1,14 +1,16 @@
 BEGIN 
   FOR I IN(
-            SELECT X.*, D.SEQDEPOSITARIO FROM (
+           SELECT X.*, D.SEQDEPOSITARIO FROM (
             SELECT SUBSTR(T.OCORRENCIA, 0, INSTR(T.OCORRENCIA,'para',1,1)-2) CERTO, substr(T.DETALHE,INSTR(T.DETALHE,'para',1,1)+5,999) ERRADO,  T.CODLINK, DETALHE FROM  (
-              SELECT REPLACE(DETALHE,'Deposit·rio de ','') OCORRENCIA, CODLINK, DETALHE
+              SELECT REPLACE(DETALHE,'Deposit√°rio de ','') OCORRENCIA, CODLINK, DETALHE
               FROM DGE_OCORRENCIA
-              WHERE MOTIVO = 'ALTERA«√O DE ESP…CIE'
-              AND DATA >='29-DEC-2022'
-              AND DETALHE LIKE '%Deposit·rio%' ) t
-              ) X,  FI_DEPOSITARIO D
+              WHERE MOTIVO = 'ALTERA√á√ÉO DE ESP√âCIE'
+              AND DATA >='01-JAN-2023'
+              AND DETALHE LIKE '%Deposit√°rio%' ) t
+              ) X,  FI_DEPOSITARIO D, FI_TITULO Tx
               WHERE D.DESCRICAO (+) = X.CERTO 
+              AND Tx.Seqtitulo = X.Codlink
+              AND Tx.SeqDepositario <> D.SeqDepositario
               --and CODLINK = '580000519699322'
            )
    LOOP
@@ -16,8 +18,8 @@ BEGIN
               
               INSERT INTO DGE_OCORRENCIA (TIPO,NIVEL,DATA,HORA,CODUSUARIO,DETALHE,MOTIVO,SISTEMA,MODULO,TABLINK,TERMINAL,
               USUARIOOS,CODAPLICACAO,SESSIONID,CODLINK)
-            VALUES(7,1,TRUNC(SYSDATE),162600,'RODOLFO.BORTOLOZO','Deposit·rio de '||I.ERRADO ||' para '|| I.CERTO,
-            'CORRE«√O/ALTERA«√O DE DEPOSIT¡RIO','FINANCEIRO','OPERADORPLUS','FI_TITULO','DESKTOP-1U8AVLM','rodolfo.bortolozo','FIALTTITULO',NULL, I.CODLINK); 
+            VALUES(7,1,TRUNC(SYSDATE),095300,'RODOLFO.BORTOLOZO','Deposit√°rio de '||I.ERRADO ||' para '|| I.CERTO,
+            'CORRE√á√ÉO/ALTERA√á√ÉO DE DEPOSIT√ÅRIO','FINANCEIRO','OPERADORPLUS','FI_TITULO','DESKTOP-1U8AVLM','rodolfo.bortolozo','FIALTTITULO',NULL, I.CODLINK); 
               
    END LOOP;
 END;
